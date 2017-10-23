@@ -67,7 +67,5 @@ Il affiche l'endroit à modifier pour avancer :
 
 Certains exercices ont des aides à la fin, pensez à regarder s'il y en a en cas de difficulté.
 
-Si ce n'est pas suffisant, la solution est accessible dans la [branche `solution`](https://github.com/loicknuchel/scala-class/tree/solution/src/test/scala/exercices)
-
 ## Troubleshooting
 
