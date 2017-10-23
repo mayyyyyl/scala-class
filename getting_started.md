@@ -8,7 +8,7 @@
     - pour vérifier si Java est installé, ouvrir le terminal/invite de commande et taper `java -version`
     
 2. Installer SBT [Windows](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Windows.html) [Mac](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Mac.html) [Linux](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Linux.html)
-    - pour vérifier si Java est installé, ouvrir le terminal/invite de commande et taper `sbt sbt-version`
+    - pour vérifier que Sbt est installé, ouvrir le terminal/invite de commande et taper `sbt sbt-version`
 3. Télécharger le Hand's on : [https://github.com/oraclewalid/scala-class.git](https://github.com/oraclewalid/scala-class.git)
     - via git clone
     - via zip (bouton vert à droite)
