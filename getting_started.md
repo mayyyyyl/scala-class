@@ -6,18 +6,21 @@
 
 1. Installer (si nécessaire) Java 8 ([Téléchargement](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html), Installation [Windows](http://www.objis.com/formation-java/tutoriel-java-installation-jdk.html) [Mac](http://www.wikihow.com/Install-the-JDK-(Java-Development-Kit)-on-a-Mac) [Linux](https://tecadmin.net/install-oracle-java-8-ubuntu-via-ppa/))
     - pour vérifier si Java est installé, ouvrir le terminal/invite de commande et taper `java -version`
-2. Télécharger le Hand's on : [https://github.com/loicknuchel/scala-class](https://github.com/loicknuchel/scala-class)
+    
+2. Installer SBT [Windows](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Windows.html) [Mac](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Mac.html) [Linux](http://www.scala-sbt.org/release/docs/Installing-sbt-on-Linux.html)
+    - pour vérifier si Java est installé, ouvrir le terminal/invite de commande et taper `sbt sbt-version`
+3. Télécharger le Hand's on : [https://github.com/oraclewalid/scala-class.git](https://github.com/oraclewalid/scala-class.git)
     - via git clone
     - via zip (bouton vert à droite)
-3. Ouvrir la console/terminal dans le dossier téléchargé et lancer :
-    - Linux/Mac: `/handson go`
+4. Ouvrir la console/terminal dans le dossier téléchargé et lancer :
+    - Linux/Mac: `./handson go`
     - Windows: `handson.bat go`
 
 Cela téléchargera l'ensemble des dépendances nécessaires. A la fin vous aurez un écran comme ceci :
 
 ![handson-terminal](docs/assets/handson-terminal.png)
 
-4. Installer un éditeur de texte/IDE
+5. Installer un éditeur de texte/IDE
     - [IntelliJ IDEA Community](https://www.jetbrains.com/idea/download/) (puissant mais plus compliqué à configurer)
         - Télécharger et installer
         - Durant le premier lancement intellij va proposer l'installation des plugins. sélectionner le plugin Scala
@@ -41,7 +44,7 @@ Le Hand's on est simplement une suite de tests modifiée pour rendre les choses 
 ## Lancer le Hand's on
 
 - Ouvrir un terminal dans le dossier du Hand's on et exécuter :
-    - Linux/Mac: `/handson go`
+    - Linux/Mac: `./handson go`
     - Windows: `handson.bat go`
 - Ouvrir le fichier `src/test/scala/exercices/e01_scala_syntax.scala` dans l'éditeur et faire le premier exercice
 - Le terminal exécute à nouveau les tests :D
