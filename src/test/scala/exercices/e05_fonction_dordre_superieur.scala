@@ -40,8 +40,8 @@ class e05_fonction_dordre_superieur extends HandsOnSuite {
 
     import Compte._
 
-    debit(cpt, 5).solde shouldBe __
-    credit(cpt, 10).solde shouldBe __
+    debit(cpt, 5).solde shouldBe 5
+    credit(cpt, 10).solde shouldBe 20
   }
   /**
     * on remarque que si une nouvelle opération devait être rajoutée sur le compte cela passerait
@@ -102,8 +102,8 @@ class e05_fonction_dordre_superieur extends HandsOnSuite {
 
     val (source1, target1) = virement(cptSource, cptTarget, 20, debit, credit)
 
-    source1 shouldBe __
-    target1 shouldBe __
+    source1 shouldBe Compte(80)
+    target1 shouldBe Compte(70)
 
     /**
       * On souhaite faire des virements entre deux comptes. Les deux opérations (debit / credit ) vont nous être bien utiles.
@@ -115,7 +115,7 @@ class e05_fonction_dordre_superieur extends HandsOnSuite {
 
     val (source2, target2) = virement(cptSource, cptTarget, 20, debitPayant, credit)
 
-    source2 shouldBe __
-    target2 shouldBe __
+    source2 shouldBe Compte(78.6)
+    target2 shouldBe Compte(90)
   }
 }

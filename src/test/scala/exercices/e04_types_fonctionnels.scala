@@ -55,20 +55,20 @@ class e04_types_fonctionnels extends HandsOnSuite {
     exercice("rappel List et Option") {
       // tansforme "list" pour produire les résultats attendus
       val list: List[String] = List("I", "love", "Monads")
-      val lengths: List[Int] = ???
+      val lengths: List[Int] = list.map(_.length)
       lengths shouldBe List(1, 4, 6)
-      val longests: List[String] = ???
+      val longests: List[String] = list.filter(_.length == list.map(_.length).max)
       longests shouldBe List("Monads")
-      val letters: List[Char] = ???
+      val letters: List[Char] = list.flatMap(_.toUpperCase)
       letters shouldBe List('I', 'l', 'o', 'v', 'e', 'M', 'o', 'n', 'a', 'd', 's')
 
       // tansforme "option" pour produire les résultats attendus
       val option: Option[String] = list.tail.headOption
-      val word: Option[String] = ???
+      val word: Option[String] = option.map(_.toUpperCase)
       word shouldBe Some("LOVE")
-      val long: Option[String] = ???
+      val long: Option[String] = option.filter(_.length > 5)
       long shouldBe None
-      val first: Option[Char] = ???
+      val first: Option[Char] = option.flatMap(_.headOption)
       first shouldBe Some('l')
     }
 
@@ -79,15 +79,15 @@ class e04_types_fonctionnels extends HandsOnSuite {
       val result: Try[Int] = toInt("12")
 
       // utilise `map` pour enlever 2 au résultat
-      val modified: Try[Int] = ???
+      val modified: Try[Int] = result.map(_ - 2)
       modified shouldBe Success(10)
 
       // utilise `filter` pour conserver le résultat uniquement s'il est > 10
-      val top: Try[Int] = ???
+      val top: Try[Int] = result.filter(_ > 10)
       top shouldBe Success(12)
 
       // utilise `flatMap` pour transformer à nouveau le résultat obtenu mais avec un '0' en plus
-      val twice: Try[Int] = ???
+      val twice: Try[Int] = result.flatMap(r => Try(r * 10))
       twice shouldBe Success(120)
     }
 
@@ -95,20 +95,20 @@ class e04_types_fonctionnels extends HandsOnSuite {
       val future: Future[Speaker] = DevoxxApi.getSpeaker("09a79f4e4592cf77e5ebf0965489e6c7ec0438cd")
 
       // récupère le `firstName` du speaker grâce à `map`
-      val name: Future[String] = ???
+      val name: Future[String] = future.map(_.firstName)
       whenReady(name) { result =>
         result shouldBe "Loïc"
       }
 
       // récupère le speaker uniquement si sa `lang` et "en"
-      val isEnglish: Future[Speaker] = ???
+      val isEnglish: Future[Speaker] = future.filter(_.lang == "en")
       intercept[NoSuchElementException] {
         await(isEnglish)
       }
 
       // accède au premier talk accepté du speaker (utilise les accesseurs risqués pour simplifier les choses)
       // grâce à DevoxxApi.getTalk(TalkId)
-      val firstTalk: Future[Talk] = ???
+      val firstTalk: Future[Talk] = future.map(_.talks.head)
       whenReady(firstTalk) { result =>
         result.title shouldBe "Scala class, bien démarrer avec Scala"
       }
@@ -135,15 +135,24 @@ class e04_types_fonctionnels extends HandsOnSuite {
       val either: Either[String, Int] = toInt("12")
 
       // utilise `map` pour enlever 2 au résultat de droite
-      val modified: Either[String, Int] = ???
+      val modified: Either[String, Int] = either match {
+        case Right(num) => Right(num - 2)
+        case left@Left(_) => left
+      }
       modified shouldBe Right(10)
 
       // utilise `filter` pour conserver le résultat à droite uniquement s'il est > 10
-      val top: Option[Either[String, Int]] = ???
+      val top: Option[Either[String, Int]] = either match {
+        case Right(num) if num > 10 => Some(Right(num))
+        case _ => Some(Left("Number is not greater than 10"))
+      }
       top shouldBe Some(Right(12))
 
       // utilise `flatMap` à droite pour transformer à nouveau le résultat obtenu mais avec un '0' en plus
-      val twice: Either[String, Int] = ???
+      val twice: Either[String, Int] = either match {
+        case Right(num) => Right(num * 10)
+        case left@Left(_) => left
+      }
       twice shouldBe Right(120)
     }
   }
@@ -164,15 +173,23 @@ class e04_types_fonctionnels extends HandsOnSuite {
         (_, v3) <- Option((v2._1, "value3"))
       } yield v3
 
-      result shouldBe __
+      result shouldBe "value3"
     }
     // Remarques :
     //  - on ne peut pas changer de Monade au cours d'un `for-comprehension` (ici on utilise Option)
     //  - il est possible d'utiliser le pattern matching dans la partie résultat
 
     exercice("mise en application") {
-      // récupère le titre du premier talk du speaker "09a79f4e4592cf77e5ebf0965489e6c7ec0438cd" grâce à une for-comprehension
-      val firstTalkTitle: Future[String] = ???
+      // Récupère le titre du premier talk du speaker "09a79f4e4592cf77e5ebf0965489e6c7ec0438cd" grâce à une for-comprehension
+      val firstTalkTitle: Future[String] = for {
+        speaker <- DevoxxApi.getSpeaker("09a79f4e4592cf77e5ebf0965489e6c7ec0438cd")
+        firstTalkId <- speaker.talks.headOption match {
+          case Some(talkId) => Future.successful(talkId)
+          case None => Future.failed(new NoSuchElementException("Speaker has no talks"))
+        }
+        firstTalk <- DevoxxApi.getTalk(firstTalkId)
+      } yield firstTalk.title
+
       whenReady(firstTalkTitle) { result =>
         result shouldBe "Scala class, bien démarrer avec Scala"
       }
